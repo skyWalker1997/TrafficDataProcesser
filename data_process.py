@@ -156,11 +156,7 @@ def output_data(day_arr,OUTPUT_PATH):
     for slot in day_arr:
         len_percent = str(slot['len_percent']).replace('{','').replace('}','').replace(',',';').replace('\'','').replace(' ','')
         f.writelines([str(slot['slot']),',',str(slot['volume_count']),',',len_percent,'\n'])
-    #     for slot_data in day_arr:
-    #         if slot_data
-    #         f.writelines(
-    #             [slot,day_arr[]])
-    # f.close()
+    f.close()
 
 if __name__ == '__main__':
     data = file_path()
