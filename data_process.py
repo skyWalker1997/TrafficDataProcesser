@@ -154,7 +154,7 @@ def distance_juge(distance_arr):
 def output_data(day_arr,OUTPUT_PATH):
     f = open(OUTPUT_PATH, 'w')
     for slot in day_arr:
-        len_percent = str(slot['len_percent']).replace('{','').replace('}','').replace(',',';').replace('\'','')
+        len_percent = str(slot['len_percent']).replace('{','').replace('}','').replace(',',';').replace('\'','').replace(' ','')
         f.writelines([str(slot['slot']),',',str(slot['volume_count']),',',len_percent,'\n'])
     #     for slot_data in day_arr:
     #         if slot_data
