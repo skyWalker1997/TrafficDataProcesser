@@ -147,8 +147,8 @@ def distance_juge(distance_arr):
     to_15 = "%.2f%%" % (to_15 * 100)
     above_15 = above_15 / length
     above_15 = "%.2f%%" % (above_15 * 100)
-    len_dict = {'5':str(below_5)+'%','10':str(to_10)+'%',
-                '15':str(to_15)+'%','15+':str(above_15)+'%'}
+    len_dict = {'5':str(below_5),'10':str(to_10),
+                '15':str(to_15),'15+':str(above_15)}
     return len_dict
 
 def output_data(day_arr,OUTPUT_PATH):
