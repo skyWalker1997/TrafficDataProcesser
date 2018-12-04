@@ -16,12 +16,13 @@ def file_path():
         day_dict_arr = []
         filename = info[i]
         filedomain = filename.split('_')[0]+'_'+filename.split('_')[1]+'_'+filename.split('_')[2]
+        fileout = filename.split('_')[0]+'_'+filename.split('_')[1]+'_0101_volume.txt'
         date = filename.split('_')[1]
         data = read_data_in_line(__DATA_FOLDER__+filedomain)
         poi = data_zip(data)
         day_timeslot_dict = data_count(poi,day_timeslot_dict,date)
         day_arr = dict_zip(day_timeslot_dict,day_dict_arr)
-        output_data(day_arr,__OUT_FOLDER__+filedomain+'_volume')
+        output_data(day_arr,__OUT_FOLDER__+fileout)
         # for slot in day_arr:
         #     print(slot)
         # slot_arr.sort()
