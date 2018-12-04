@@ -21,7 +21,7 @@ def file_path():
         poi = data_zip(data)
         day_timeslot_dict = data_count(poi,day_timeslot_dict,date)
         day_arr = dict_zip(day_timeslot_dict,day_dict_arr)
-        output_data(day_arr,__OUT_FOLDER__+filedomain)
+        output_data(day_arr,__OUT_FOLDER__+filedomain+'_volume')
         # for slot in day_arr:
         #     print(slot)
         # slot_arr.sort()
