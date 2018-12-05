@@ -1,6 +1,6 @@
 import re
 __DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/taxi_data_origin/taxi_data_origin.txt'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/taxi_data_flixed/taxi_data_flixed.txt'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/taxi_data_flixed/T_0425_0101.txt'
 
 def read_data_in_line(DATA_PATH):
     data = []
@@ -21,11 +21,6 @@ def data_flix(data_arr):
     for one_line in data_arr:
         temp_arr = []
         if one_line[0] in driver_dict.keys():
-            temp_arr = driver_dict[one_line[0]]
-            # for i in range(len(temp_arr)):
-            #     if i == 0:
-            #         if one_line[3] - temp_arr[i][3] >
-            #     if one_line[3] - temp_arr[][3] > 20
             if (abs((int(one_line[3]) - int(temp_arr[len(temp_arr)-1][3])))) > 20:
                 temp_arr.append(one_line)
                 driver_dict[one_line[0]] = temp_arr
