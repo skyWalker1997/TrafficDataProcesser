@@ -2,8 +2,8 @@ import re
 import os
 from os import listdir
 from geopy.distance import geodesic
-__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/data/data/'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/data/out_data/'
+__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/data/'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/out_data/'
 
 def file_path():
     """处理每天和每个时段的上下车文件"""

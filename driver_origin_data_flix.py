@@ -1,12 +1,17 @@
 import re
-__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/taxi_data_origin/taxi_data_origin.txt'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/taxi_data_flixed/T_0425_0101.txt'
+__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/taxi_data_origin/0.txt'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/taxi_data_flixed/T_0425_0101.txt'
 
 def read_data_in_line(DATA_PATH):
-    data = []
+    new_data_arr = []
+    i = 0
     for line in open(DATA_PATH,'r',encoding='utf-8'): #设置文件对象并读取每一行文件
-        data.append(line)               #将每一行文件加入到list中
-    return data
+        print(i)
+        i = i+1
+        line = line[:-1]
+        one_record = re.split(',', line)
+        new_data_arr.append(one_record)
+    return new_data_arr
 
 def data_resolve(data):
     new_data_arr = []
@@ -18,7 +23,10 @@ def data_resolve(data):
 
 def data_flix(data_arr):
     driver_dict = {}
+    i = 0
     for one_line in data_arr:
+        print(i)
+        i = i+1
         temp_arr = []
         if one_line[0] in driver_dict.keys():
             if (abs((int(one_line[3]) - int(temp_arr[len(temp_arr)-1][3])))) > 20:
@@ -38,8 +46,8 @@ def output_data(driver_dict,OUTPUT_PATH):
 
 if __name__ == '__main__':
     origin_data = read_data_in_line(__DATA_FOLDER__)
-    new_data_arr = data_resolve(origin_data)
-    driver_dict = data_flix(new_data_arr)
+    # new_data_arr = data_resolve(origin_data)
+    driver_dict = data_flix(origin_data)
     output_data(driver_dict,__OUT_FOLDER__)
     # for key in driver_dict.keys():
     #     print(driver_dict[key])

@@ -2,8 +2,8 @@ import re
 import os
 import time_format_exchange as tfe
 from os import listdir
-__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/out_data/'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/Data_processer/slot_data/'
+__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/out_data/'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/slot_data/'
 
 def file_path():
     """处理每天和每个时段的上下车文件"""
