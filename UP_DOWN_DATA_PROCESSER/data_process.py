@@ -1,6 +1,5 @@
 import re
-import os
-import time_format_exchange as tfe
+from TRACK_DATA_PROCESSER import time_format_exchange as tfe
 from os import listdir
 __DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/out_data/'
 __OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/slot_data/'

@@ -1,10 +1,10 @@
 import re
 import time
 from os import listdir
-import time_format_exchange as tfe
+from TRACK_DATA_PROCESSER import time_format_exchange as tfe
 
-__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/taxi_data_flixed/'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/taxi_data_final/'
+__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/taxi_data_flixed/'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/taxi_data_final/'
 
 
 def file_path():
@@ -12,8 +12,6 @@ def file_path():
     filelistlenth = len(info)
     for i in range(filelistlenth):
         """一个文件中的处理过程"""
-        day_timeslot_dict = {}
-        day_dict_arr = []
         filename = info[i]
         filedomain = filename.split('_')[0] + '_' + filename.split('_')[1] + '_' + filename.split('_')[2].split('.')[0]
         date = filename.split('_')[1]
@@ -102,6 +100,7 @@ def calculate_speed(data_dict):
             temp_speed = speed_account(temp_dict[driver])
             average_speed_for_one_slot = average_speed_for_one_slot+temp_speed
         average_speed_for_one_slot = average_speed_for_one_slot/temp_arr[0]
+        average_speed_for_one_slot = '%.2f' % average_speed_for_one_slot
         temp_arr.append(average_speed_for_one_slot)
         final_dict[key] = temp_arr
     return final_dict,time_slot_arr
