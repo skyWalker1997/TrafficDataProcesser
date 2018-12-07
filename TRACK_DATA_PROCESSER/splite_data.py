@@ -10,7 +10,7 @@ def splite_data(DATA_PATH,OUT_FOLDER):
   info = listdir(DATA_PATH)
   print('splite data list:',info)
   DATA_PATH = DATA_PATH+info[0]
-  LIMIT = 1000000
+  LIMIT = 10000000
   file_count = 0
   url_list = []
   with io.open(DATA_PATH,'r',encoding='utf-8') as f:
