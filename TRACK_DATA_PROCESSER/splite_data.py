@@ -1,3 +1,4 @@
+import re
 import time
 from os import listdir
 
@@ -10,22 +11,24 @@ def splite_data(DATA_PATH,OUT_FOLDER):
   info = listdir(DATA_PATH)
   print('splite data list:',info)
   DATA_PATH = DATA_PATH+info[0]
-  LIMIT = 10000000
+  LIMIT = 10000
   file_count = 0
   url_list = []
   with io.open(DATA_PATH,'r',encoding='utf-8') as f:
-    print(file_count)
-    for line in f:
-      url_list.append(line)
-      if len(url_list) < LIMIT:
-        continue
-      file_name = OUT_FOLDER + str(file_count)+".txt"
-      with io.open(file_name,'w',encoding='utf-8') as file:
-        for url in url_list[:-1]:
-          file.write(url)
-        file.write(url_list[-1].strip())
-        url_list=[]
-        file_count+=1
+      print(file_count)
+      for line in f:
+          line = [re.split(',',line)[0],re.split(',',line)[1],re.split(',',line)[2],re.split(',',line)[3],re.split(',',line)[4]]
+          url_list.append(str(line).replace('[','').replace(']','').replace('\'','')+'\n')
+          if len(url_list) < LIMIT:
+              continue
+          file_name = OUT_FOLDER + str(file_count)+".txt"
+          with io.open(file_name,'w',encoding='utf-8') as file:
+              for url in url_list[:-1]:
+                  print(url)
+                  file.write(url)
+              file.write(url_list[-1].strip())
+              url_list=[]
+              file_count+=1
   if url_list:
     file_name = OUT_FOLDER + str(file_count) + ".txt"
     with io.open(file_name,'w',encoding='utf-8') as file:
