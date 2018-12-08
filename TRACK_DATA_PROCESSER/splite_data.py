@@ -24,7 +24,6 @@ def splite_data(DATA_PATH,OUT_FOLDER):
           file_name = OUT_FOLDER + str(file_count)+".txt"
           with io.open(file_name,'w',encoding='utf-8') as file:
               for url in url_list[:-1]:
-                  print(url)
                   file.write(url)
               file.write(url_list[-1].strip())
               url_list=[]
