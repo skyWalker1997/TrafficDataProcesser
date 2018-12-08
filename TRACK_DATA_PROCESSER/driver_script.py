@@ -16,6 +16,7 @@ if __name__ == '__main__':
         time_start_round = time.time()
         if i == 0:
             print('round:', i, 'is processing......')
+            splite_data.splite_data(__ORIGIN_FOLDER__,__SPLITE_FOLDER__)
             print('Compelte splite data in round:', i)
             driver_origin_data_flix.driver_flix(__SPLITE_FOLDER__, __FLIXED_FOLDER__)
             print('Compelte flix data in round:', i)
