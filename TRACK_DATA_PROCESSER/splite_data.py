@@ -11,7 +11,7 @@ def splite_data(DATA_PATH,OUT_FOLDER):
   info = listdir(DATA_PATH)
   print('splite data list:',info)
   DATA_PATH = DATA_PATH+info[0]
-  LIMIT = 10000
+  LIMIT = 10000000
   file_count = 0
   url_list = []
   with io.open(DATA_PATH,'r',encoding='utf-8') as f:
@@ -28,6 +28,7 @@ def splite_data(DATA_PATH,OUT_FOLDER):
                   file.write(url)
               file.write(url_list[-1].strip())
               url_list=[]
+              print('Complete splite:', file_count, 'files')
               file_count+=1
   if url_list:
     file_name = OUT_FOLDER + str(file_count) + ".txt"

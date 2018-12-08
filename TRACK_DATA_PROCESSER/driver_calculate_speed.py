@@ -1,7 +1,8 @@
+import gc
 import re
 import time
 from os import listdir
-from TRACK_DATA_PROCESSER import time_format_exchange as tfe
+import time_format_exchange as tfe
 
 __DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/taxi_data_flixed/'
 __OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/taxi_data_final/'
@@ -20,6 +21,7 @@ def file_path():
         day_timeslot_dict,time_slot_arr = calculate_speed(slot_dict)
         time_slot_arr.sort()
         output_data(day_timeslot_dict,time_slot_arr,__OUT_FOLDER__+filedomain+'_volumn.txt')
+
 
 
 

@@ -1,3 +1,4 @@
+import gc
 import re
 import time
 from os import listdir
@@ -14,31 +15,26 @@ def file_path(BEFORE_FLIX_PATH,AFTER_FLIX_FOLDER):
         origin_data = read_data_in_line(BEFORE_FLIX_PATH+filename)
         driver_dict = data_flix(origin_data)
         output_data(driver_dict, AFTER_FLIX_FOLDER+filename)
+        del origin_data, driver_dict
+        gc.collect()
+        print('Complete flix:', i, 'files')
 
 
 def read_data_in_line(DATA_PATH):
         new_data_arr = []
-        # i = 0
         for line in open(DATA_PATH,'r',encoding='utf-8'): #设置文件对象并读取每一行文件
             line = line[:-1]
-            # print(i,':',line)
             one_record = [re.split(',', line)[0], re.split(',', line)[1], re.split(',', line)[2],
                           re.split(',', line)[3], re.split(',', line)[4]]
             new_data_arr.append(one_record)
-            # i = i+1
         return new_data_arr
-
-def data_resolve(data):
-    new_data_arr = []
-    for data_in_line in data:
-        data_in_line = data_in_line[:-1]
-        one_record = re.split(',',data_in_line)
-        new_data_arr.append(one_record)
-    return new_data_arr
 
 def data_flix(data_arr):
     driver_dict = {}
+    i  = 0
     for one_line in data_arr:
+        if i % 5000000 == 0 :
+            print('flix:',i)
         temp_arr = []
         if one_line[0] in driver_dict.keys():
             temp_arr = driver_dict[one_line[0]]
@@ -48,6 +44,7 @@ def data_flix(data_arr):
         else:
             temp_arr.append(one_line)
             driver_dict[one_line[0]] = temp_arr
+        i += 1
     return  driver_dict
 
 def output_data(driver_dict,OUTPUT_PATH):

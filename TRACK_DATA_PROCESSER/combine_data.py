@@ -7,12 +7,12 @@ def combine_data(DATA_FOLDER,OUT_PATH):
     time_start = time.time()
     info = os.listdir(DATA_FOLDER)
     print('combine data list:',info)
-    fo = open(OUT_PATH, 'w')
+    fo = open(OUT_PATH+'combined.txt', 'w')
     for name in info:
         fi = open(DATA_FOLDER+name)
-        # print(DATA_FOLDER+name)
+        print('Complete combine:',name)
         while True:
-            s = fi.read(1 * 1024)
+            s = fi.read(16 * 1024)
             if not s:
                 break
             fo.write(s)
