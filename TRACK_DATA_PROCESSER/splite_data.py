@@ -15,7 +15,7 @@ def splite_data(DATA_PATH,OUT_FOLDER):
   file_count = 0
   url_list = []
   with io.open(DATA_PATH,'r',encoding='utf-8') as f:
-      print(file_count)
+      #print(file_count)
       for line in f:
           line = [re.split(',',line)[0],re.split(',',line)[1],re.split(',',line)[2],re.split(',',line)[3],re.split(',',line)[4]]
           url_list.append(str(line).replace('[','').replace(']','').replace('\'','')+'\n')
