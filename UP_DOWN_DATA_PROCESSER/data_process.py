@@ -16,9 +16,8 @@ def file_path():
         day_timeslot_dict = {}
         day_dict_arr = []
         filename = info[i]
-        print(filename)
         filedomain = filename.split('_')[0]+'_'+filename.split('_')[1]+'_'+filename.split('_')[2]
-        fileout = filename.split('_')[0]+'_'+filename.split('_')[1]+'_0101_volume.txt'
+        fileout = filename.split('_')[0]+'_'+filename.split('_')[1]+'_'+filename.split('_')[2].replace('.txt','')+'volume.txt'
         date = filename.split('_')[1]
         data = read_data_in_line(__DATA_FOLDER__+filedomain)
         poi = data_zip(data)
@@ -119,7 +118,6 @@ def dict_zip(day_timeslot_dict,day_dict_arr):
     for slot in slot_arr:
         day_dict = {}
         day_dict['slot'] = slot
-        print(slot)
         day_dict['volume_count_up'],day_dict['volume_count_down'] = up_down_count(day_timeslot_dict[slot])
         distance_arr = len_arr(day_timeslot_dict[slot])
         len_dict = distance_juge(distance_arr)
