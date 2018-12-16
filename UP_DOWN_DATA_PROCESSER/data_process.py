@@ -1,8 +1,10 @@
+import gc
 import re
 from TRACK_DATA_PROCESSER import time_format_exchange as tfe
 from os import listdir
-__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/out_data/'
-__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafiicDataProcesser/slot_data/'
+import numpy as np
+__DATA_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/out_data/'
+__OUT_FOLDER__ = '/Users/PINKFLOYD/Desktop/graduatedesign/TrafficDataProcesser/slot_data/'
 
 def file_path():
     """处理每天和每个时段的上下车文件"""
@@ -14,6 +16,7 @@ def file_path():
         day_timeslot_dict = {}
         day_dict_arr = []
         filename = info[i]
+        print(filename)
         filedomain = filename.split('_')[0]+'_'+filename.split('_')[1]+'_'+filename.split('_')[2]
         fileout = filename.split('_')[0]+'_'+filename.split('_')[1]+'_0101_volume.txt'
         date = filename.split('_')[1]
@@ -22,10 +25,9 @@ def file_path():
         day_timeslot_dict = data_count(poi,day_timeslot_dict,date)
         day_arr = dict_zip(day_timeslot_dict,day_dict_arr)
         output_data(day_arr,__OUT_FOLDER__+fileout)
-        # for slot in day_arr:
-        #     print(slot)
-        # slot_arr.sort()
-        # print(slot_arr)
+        del data,poi,day_arr
+        gc.collect()
+
 def read_data_in_line(DATA_PATH):
     data = []
     for line in open(DATA_PATH,'r',encoding='utf-8'): #设置文件对象并读取每一行文件
@@ -65,20 +67,20 @@ def time_juge(HH_sta,HH_end,MM_sta,MM_end,slot_dict,date,data):
         if MM_sta / 30 >= 1:
             if date + str(HH_sta) + '02' in slot_dict.keys():
                 temp_arr = slot_dict[date + str(HH_sta) + '02']
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_sta) + '02'] = temp_arr
             else:
                 slot_dict[date + str(HH_sta) + '02'] = temp_arr
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_sta) + '02'] = temp_arr
         else:
             if date + str(HH_sta) + '01' in slot_dict.keys():
                 temp_arr = slot_dict[date + str(HH_sta) + '01']
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_sta) + '01'] = temp_arr
             else:
                 slot_dict[date + str(HH_sta) + '01'] = temp_arr
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_sta) + '01'] = temp_arr
 
     temp_arr = []
@@ -90,20 +92,20 @@ def time_juge(HH_sta,HH_end,MM_sta,MM_end,slot_dict,date,data):
         if MM_end / 30 >= 1:
             if date + str(HH_end) + '02' in slot_dict.keys():
                 temp_arr = slot_dict[date + str(HH_end) + '02']
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_end) + '02'] = temp_arr
             else:
                 slot_dict[date + str(HH_end) + '02'] = temp_arr
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_end) + '02'] = temp_arr
         else:
             if date + str(HH_end) + '01' in slot_dict.keys():
                 temp_arr = slot_dict[date + str(HH_end) + '01']
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_end) + '01'] = temp_arr
             else:
                 slot_dict[date + str(HH_end) + '01'] = temp_arr
-                temp_arr.append(data[7])
+                temp_arr.append({'len':data[7],'u_d':data[8]})
                 slot_dict[date + str(HH_end) + '01'] = temp_arr
 
     return slot_dict
@@ -117,44 +119,86 @@ def dict_zip(day_timeslot_dict,day_dict_arr):
     for slot in slot_arr:
         day_dict = {}
         day_dict['slot'] = slot
-        day_dict['volume_count'] = len(day_timeslot_dict[slot])
-        len_dict = distance_juge(day_timeslot_dict[slot])
+        print(slot)
+        day_dict['volume_count_up'],day_dict['volume_count_down'] = up_down_count(day_timeslot_dict[slot])
+        distance_arr = len_arr(day_timeslot_dict[slot])
+        len_dict = distance_juge(distance_arr)
         day_dict['len_percent'] = len_dict
         day_dict_arr.append(day_dict)
     return day_dict_arr
+
+def len_arr(day_timeslot_dict):
+    distance_arr = []
+    for k in day_timeslot_dict:
+        distance_arr.append(k['len'])
+    return distance_arr
 
 def distance_juge(distance_arr):
     below_5 = 0
     to_10 = 0
     to_15 = 0
     above_15 = 0
+    below_5_list = []
+    to_10_list = []
+    to_15_list = []
+    above_15_list = []
     length  = distance_arr.__len__()
     for len in distance_arr:
         if float(len) <= 5:
             below_5 = below_5 + 1
+            below_5_list.append(float(len))
         elif float(len) > 5 and float(len) <= 10:
             to_10 = to_10 + 1
+            to_10_list.append(float(len))
         elif float(len) > 10 and float(len) <= 15:
             to_15 = to_15 + 1
+            to_15_list.append(float(len))
         else:
             above_15 = above_15+1
+            above_15_list.append(float(len))
     below_5 = below_5/length
     below_5 = "%.2f%%" % (below_5 * 100)
+    if below_5_list.__len__() == 0:
+        below_5_mean = 0.00
+    else:
+        below_5_mean = "%.2f" % np.mean(below_5_list)
     to_10 = to_10 / length
     to_10 = "%.2f%%" % (to_10 * 100)
+    if to_10_list.__len__() == 0:
+        to_10_mean = 0.00
+    else:
+        to_10_mean = "%.2f" % np.mean(to_10_list)
     to_15 = to_15 / length
     to_15 = "%.2f%%" % (to_15 * 100)
+    if to_15_list.__len__() == 0:
+        to_15_mean = 0.00
+    else:
+        to_15_mean = "%.2f" % np.mean(to_15_list)
     above_15 = above_15 / length
     above_15 = "%.2f%%" % (above_15 * 100)
-    len_dict = {'5':str(below_5),'10':str(to_10),
-                '15':str(to_15),'15+':str(above_15)}
+    if above_15_list.__len__() == 0:
+        above_15_mean = 0.00
+    else:
+        above_15_mean = "%.2f" % np.mean(above_15_list)
+    len_dict = {'5':[str(below_5),str(below_5_mean)],'10':[str(to_10),str(to_10_mean)],
+                '15':[str(to_15),str(to_15_mean)],'15+':[str(above_15),str(above_15_mean)]}
     return len_dict
+
+def up_down_count(day_timeslot_dict):
+    up_count = 0
+    down_count = 0
+    for k in day_timeslot_dict:
+        if k['u_d'] == 'down':
+            down_count+=1
+        else:
+            up_count+=1
+    return up_count,down_count
 
 def output_data(day_arr,OUTPUT_PATH):
     f = open(OUTPUT_PATH, 'w')
     for slot in day_arr:
-        len_percent = str(slot['len_percent']).replace('{','').replace('}','').replace(',',';').replace('\'','').replace(' ','')
-        f.writelines([str(slot['slot']),',',str(slot['volume_count']),',',len_percent,'\n'])
+        # len_percent = str(slot['len_percent']).replace('{','').replace('}','').replace(',',';').replace('\'','').replace(' ','')
+        f.writelines([str(slot['slot']),',',str(slot['volume_count_up']),',',str(slot['volume_count_down']),',','5:',str(slot['len_percent']['5']).replace('\'','').replace(' ,',','),';','10:',str(slot['len_percent']['10']).replace('\'','').replace(' ,',','),';','15:',str(slot['len_percent']['15']).replace('\'','').replace(' ,',','),';','15+:',str(slot['len_percent']['15+']).replace('\'','').replace(' ,',','),'\n'])
     f.close()
 
 if __name__ == '__main__':
